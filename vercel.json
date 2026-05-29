@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm ci && npx quartz build",
+  "buildCommand": "npm run install-plugins && npx quartz build",
   "outputDirectory": "public",
   "installCommand": "npm ci",
   "framework": null,
