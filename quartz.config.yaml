@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: obsidian-snowy-chi.vercel.app
+  baseUrl: obsidian-knowhere4.vercel.app
   ignorePatterns:
     - private
     - templates
