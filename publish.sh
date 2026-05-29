@@ -17,6 +17,9 @@ from pathlib import Path
 src = Path("$OBSIDIAN_VAULT")
 dst = Path("$CONTENT_DIR")
 
+# content 디렉토리 없으면 생성
+dst.mkdir(parents=True, exist_ok=True)
+
 # 삭제된 파일 반영: 기존 content 삭제 후 재복사
 for item in dst.iterdir():
     if item.name.startswith('.'):
