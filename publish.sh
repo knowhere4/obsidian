@@ -32,6 +32,11 @@ for item in dst.iterdir():
 ignore = shutil.ignore_patterns('.obsidian', '.trash', '*.canvas')
 shutil.copytree(src, dst, ignore=ignore, dirs_exist_ok=True)
 print(f"  {sum(1 for _ in dst.rglob('*') if _.is_file())} 파일 동기화됨")
+
+index_md = dst / "index.md"
+if not index_md.exists():
+    index_md.write_text("---\ntitle: Home\n---\n\n# 환영합니다\n")
+    print("  index.md 자동 생성됨")
 PYEOF
 
 echo "GitHub에 push 중..."
