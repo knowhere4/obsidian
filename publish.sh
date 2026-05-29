@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH="/home/landslide/.nvm/versions/node/v22.22.3/bin:$PATH"
 # Obsidian 볼트를 Quartz content에 동기화하고 GitHub에 push합니다.
 # 실행: ./publish.sh
 # 선택적 커밋 메시지: ./publish.sh "내 노트 업데이트"
@@ -31,4 +32,4 @@ print(f"  {sum(1 for _ in dst.rglob('*') if _.is_file())} 파일 동기화됨")
 PYEOF
 
 echo "GitHub에 push 중..."
-npx quartz sync --message "$MESSAGE"
+cd "$QUARTZ_DIR" && npx quartz sync --message "$MESSAGE"
