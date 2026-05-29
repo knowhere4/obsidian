@@ -1,4 +1,7 @@
 
+---
+publish: true
+---
 아래의 커맨드를 입력할것
 
 git clone https://github.com/knowhere4/healthconnect-mcp-bridge.git
