@@ -1,49 +1,47 @@
-name: Deploy Quartz to Vercel
+name: Deploy Quartz site to GitHub Pages
 
 on:
   push:
     branches:
       - v5
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-
-      - name: Cache Quartz plugins
-        uses: actions/cache@v4
-        with:
-          path: .quartz/plugins
-          key: quartz-plugins-${{ hashFiles('quartz.lock.json') }}
-          restore-keys: quartz-plugins-
-
-      - name: Install npm dependencies
+          node-version: 24
+      - name: Install Dependencies
         run: npm ci
-
       - name: Install Quartz plugins
-        run: npx quartz plugin install --clean
-
+        run: npx quartz plugin install
       - name: Build Quartz
         run: npx quartz build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
 
-      - name: Create Vercel output structure
-        run: |
-          mkdir -p .vercel/output/static
-          cp -r public/. .vercel/output/static/
-          echo '{"version": 3}' > .vercel/output/config.json
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
-
-      - name: Deploy to Vercel
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
