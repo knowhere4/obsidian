@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm ci && npx quartz build",
+  "outputDirectory": "public",
+  "installCommand": "npm ci",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
