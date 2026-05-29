@@ -20,3 +20,5 @@ npm ci
 Windows/Mac에서 Obsidian 열면 Google Drive로 동기화된 Shell commands 설정이 자동 적용됩니다. Quartz만 `~/quartz`에 설치하면 바로 동작합니다.
 
 https://obsidian-knowhere4.vercel.app/
+
+https://vercel.com/knowhere4s-projects
